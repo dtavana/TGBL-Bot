@@ -1,0 +1,29 @@
+{
+  "name": "tgbl-bot",
+  "version": "0.1.0",
+  "description": "Bot to use the TGBL API",
+  "scripts": {
+    "build": "npm run lint && rm -rf dist && tsc",
+    "build:dev": "rm -rf dist && tsc",
+    "dev": "npm run build:dev && node dist/app.js NODE_ENV=development",
+    "prod": "npm run build && node dist/app.js NODE_ENV=production",
+    "lint": "tslint --fix -c tslint.json 'src/**/*.ts'"
+  },
+  "author": "twist#7777",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^12.7.5",
+    "common-tags": "^1.8.0",
+    "dotenv": "^8.1.0",
+    "eris": "^0.10.1",
+    "js-yaml": "^3.13.1",
+    "pg-promise": "^9.2.0",
+    "require-all": "^3.0.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "tslint": "^5.20.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.6.3"
+  }
+}
