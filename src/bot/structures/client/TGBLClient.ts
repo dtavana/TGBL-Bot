@@ -1,3 +1,4 @@
+import axios, {AxiosInstance} from 'axios';
 import {Client} from 'eris';
 import {join} from 'path';
 import * as constants from '../../constants';
@@ -9,6 +10,7 @@ import {BaseHandler} from '../handlers';
 import {ITGBLClientConfig} from '../index';
 
 class TGBLClient extends Client {
+    public axios: AxiosInstance;
     public config: ITGBLClientConfig;
     public defaultPrefix: string;
     public types: object;
@@ -48,6 +50,11 @@ class TGBLClient extends Client {
             },
         );
         this.config = config;
+        this.axios = axios.create({
+            baseURL: `http://localhost:${config.API_PORT}/api/`,
+            headers: {Authorization: config.API_SUPER_TOKEN},
+            validateStatus: () => true,
+        });
         this.loggers = constants.ALL_LOGGERS;
         this.commands = new Map();
         this.defaultPrefix = config.DEFAULT_PREFIX;
