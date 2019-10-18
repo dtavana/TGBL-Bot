@@ -4,6 +4,8 @@ interface ITGBLClientConfig {
     PG_CONNECTION: string;
     OWNERS: string[];
     FOOTER_TEXT: string;
+    API_PORT: number;
+    API_SUPER_TOKEN: string;
 }
 
 export { ITGBLClientConfig };
