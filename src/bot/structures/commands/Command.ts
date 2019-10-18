@@ -5,8 +5,8 @@ import {ICommandArgument, ICommandOptions} from './index';
 abstract class Command implements ICommandOptions {
     public client: TGBLClient;
     public name: string;
-    public group: string | undefined;
     // Optional Command Options
+    public group: string | undefined;
     public sendError: boolean | undefined;
     public aliases: string[] | undefined;
     public args: ICommandArgument[] | undefined;
@@ -27,8 +27,8 @@ abstract class Command implements ICommandOptions {
     public async startCommand(ctx, ...args) {
         await this.preCommand(ctx, args);
         const valid: string | true | void = await this.validate(ctx);
-        if (!valid) {
-            return await this.client.sendMessage('error', ctx, valid);
+        if (typeof valid === 'string') {
+            return await this.client.sendMessage('error', this.client, ctx, valid);
         }
         let res: any;
         try {
@@ -42,7 +42,7 @@ abstract class Command implements ICommandOptions {
     }
 
     public async validate(ctx: any): Promise<string|true|void> {
-        if (this.ownerOnly && !this.client.config.OWNERS) {
+        if (this.ownerOnly && !this.client.config.OWNERS.includes(ctx.author.id)) {
             return await this.validateResponse('This command may only be used by the owner');
         } else if (this.permissions !== undefined) {
             const memberPermissions = ctx.member.permissions;
