@@ -1,4 +1,4 @@
-import {sendCustom, sendError, sendLog, sendSuccess} from './embeds';
+import {sendCustom, sendError, sendSuccess} from './embeds';
 import {MessageEvent, ReadyEvent} from './events';
 import {ConsoleLogger} from './logging';
 import {LoggerCollection} from './structures/collections';
@@ -22,7 +22,6 @@ export const ALL_EMBEDS = {
     error: sendError,
     success: sendSuccess,
     custom: sendCustom,
-    log: sendLog,
 };
 
 export const ALL_HANDLERS = [
