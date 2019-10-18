@@ -16,7 +16,6 @@ class CommandHandler extends BaseHandler {
         }
         const foundCommand = command[0];
         const argsToLookAt = command[1];
-        if (foundCommand.ownerOnly && !this.client.config.OWNERS.includes(message.author.id)) { return; }
         const args: any[] | string | null = await this.parseArgs(message, foundCommand, argsToLookAt);
         if (typeof args === 'string') {
             const ctx = new Context(this.client, message, null);
