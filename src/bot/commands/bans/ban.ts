@@ -21,7 +21,6 @@ class BanCommand extends Command {
                     type: 'string',
                 },
             ],
-            ownerOnly: true,
         });
     }
 
@@ -41,6 +40,13 @@ class BanCommand extends Command {
             return await this.client.sendMessage('error', this.client, ctx, msg);
         }
         await this.client.sendMessage('success', this.client, ctx, msg);
+    }
+    public async validate(ctx: any): Promise<string|true|void> {
+        if (ctx.member.roles.includes(this.client.config.MOD_ROLE_ID)) {
+            return true;
+        } else {
+            return await this.validateResponse('This command can only be used by TGBL admins');
+        }
     }
     private async checkServerId(id, serverId) {
         return await this.client.pg.db.oneOrNone('SELECT * FROM servers WHERE ownerIdentifier = $1 AND serverId = $2;', [id, serverId]);
