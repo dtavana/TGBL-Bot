@@ -1,10 +1,10 @@
 import {TGBLClient} from '../../structures';
 import {Command} from '../../structures/commands';
 
-class BanCommand extends Command {
+class UnbanCommand extends Command {
     constructor(client: TGBLClient) {
         super(client, __dirname, {
-            name: 'ban',
+            name: 'unban',
             group: 'Bans',
             sendError: true,
             args: [
@@ -16,23 +16,18 @@ class BanCommand extends Command {
                     key: 'identifier',
                     type: 'string',
                 },
-                {
-                    key: 'reason',
-                    type: 'string',
-                },
             ],
         });
     }
 
-    public async run(ctx, serverId, identifier, reason) {
+    public async run(ctx, serverId, identifier) {
         const validServerId = await this.checkServerId(ctx.author.id, serverId);
         if (!validServerId) {
             return await this.client.sendMessage('error', this.client, ctx, `That server id is not bound to ${ctx.author.mention}`);
         }
-        const res = await this.client.axios.post('bans/add', {
+        const res = await this.client.axios.post('bans/remove', {
             serverId,
             identifier,
-            reason,
         });
         // @ts-ignore
         const {msg, success} = res.data;
@@ -52,4 +47,4 @@ class BanCommand extends Command {
         return await this.client.pg.db.oneOrNone('SELECT * FROM servers WHERE ownerIdentifier = $1 AND serverId = $2;', [id, serverId]);
     }
 }
-export {BanCommand};
+export {UnbanCommand};
